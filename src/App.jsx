@@ -12,18 +12,18 @@ const App = () => {
     try {
       const { solana } = window;
 
-      if (solana) { 
+      if (solana) {
         // Phantom Wallet connect check
         if (solana.isPhantom) {
           console.log('Phantom wallet found!');
           //Check Logged In
           const response = await solana.connect({ onlyIfTrusted: true });
-        console.log(
-          'Connected with Public Key:',
-          response.publicKey.toString()
-        );
-        // Set the user's publicKey in state to be used later!
-        setWalletAddress(response.publicKey.toString());
+          console.log(
+            'Connected with Public Key:',
+            response.publicKey.toString()
+          );
+          // Set the user's publicKey in state to be used later!
+          setWalletAddress(response.publicKey.toString());
         }
       } else {
         alert('Solana object not found! Get a Phantom Wallet 👻');
@@ -33,7 +33,14 @@ const App = () => {
     }
   };
 
-const connectWallet = async () => {};
+  const connectWallet = async () => {  
+     const { solana } = window;
+
+  if (solana) {
+    const response = await solana.connect();
+    console.log('Connected with Public Key:', response.publicKey.toString());
+    setWalletAddress(response.publicKey.toString());
+  } };
 
   const renderNotConnectedContainer = () => (
     <button
@@ -58,8 +65,9 @@ const connectWallet = async () => {};
 
   return (
     <div className="App">
-    <div className={walletAddress ? 'authed-container' : 'container'}>
-          <div className="header-container">
+      { /* This was solely added for some styling fanciness */}
+      <div className={walletAddress ? 'authed-container' : 'container'}>
+        <div className="header-container">
           <p className="header">GIF Portal</p>
           <p className="sub-text">
             View your GIF collection in the metaverse ✨
