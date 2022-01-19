@@ -5,6 +5,18 @@ import './App.css';
 // Constants
 const TWITTER_HANDLE = 'immehmetali';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+const TEST_GIFS = [
+  'https://media.giphy.com/media/k8kITi9SAwe9JWbUaH/giphy.gif',
+  'https://media.giphy.com/media/l3vRgqJIdbRp7Exfa/giphy.gif',
+  'https://media.giphy.com/media/Basrh159dGwKY/giphy.gif',
+  'https://media.giphy.com/media/MHboUUIoxzOKs/giphy.gif',
+  'https://media.giphy.com/media/26gsvCk59AwGX28XS/giphy.gif',
+  'https://media.giphy.com/media/RkDZq0dhhYHhxdFrJB/giphy.gif',
+  'https://media.giphy.com/media/Basrh159dGwKY/giphy.gif',
+  'https://media.giphy.com/media/Basrh159dGwKY/giphy.gif'
+]
+
+
 
 const App = () => {
   const [walletAddress, setWalletAddress] = useState(null);
@@ -42,6 +54,8 @@ const App = () => {
     setWalletAddress(response.publicKey.toString());
   } };
 
+//Not Connect
+
   const renderNotConnectedContainer = () => (
     <button
       className="cta-button connect-wallet-button"
@@ -50,6 +64,20 @@ const App = () => {
       Connect to Wallet
     </button>
   );
+
+//Connect
+
+  const renderConnectedContainer = () => (
+  <div className="connected-container">
+    <div className="gif-grid">
+      {TEST_GIFS.map(gif => (
+        <div className="gif-item" key={gif}>
+          <img src={gif} alt={gif} />
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 
 
@@ -70,10 +98,13 @@ const App = () => {
         <div className="header-container">
           <p className="header">GIF Portal</p>
           <p className="sub-text">
-            View your GIF collection in the metaverse ✨
+            View this GIF collection with your wallet ✨
           </p>
           {/* Add the condition to show this only if we don't have a wallet address */}
           {!walletAddress && renderNotConnectedContainer()}
+          {/* We just need to add the inverse here! */}
+          {walletAddress && renderConnectedContainer()}
+
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
